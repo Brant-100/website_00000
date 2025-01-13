@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Password Reset</title>
+    <link rel="stylesheet" href="forgot_screen_style.css">
+</head>
+<body>
+    <div class="container">
+        <h2>Reset Your Password</h2>
+        <form id="resetForm" onsubmit="handleReset(event)">
+            <div class="form-group">
+                <label for="email">Email Address:</label>
+                <input type="email" id="email" name="email" required>
+            </div>
+            <button type="submit" class="forgot-password-btn">Send Reset Link</button>
+        </form>
+        <div id="message"></div>
+    </div>
+
+    <script>
+        function handleReset(event) {
+            event.preventDefault();
+            
+            const email = document.getElementById('email').value;
+            const messageDiv = document.getElementById('message');
+            
+            // This is where you would typically make an API call to your backend
+            // For demonstration, we'll show a success message
+            messageDiv.innerHTML = `Password reset link has been sent to ${email}. Please check your inbox.`;
+            messageDiv.style.color = '#4CAF50';
+            
+            // Clear the form
+            document.getElementById('resetForm').reset();
+        }
+    </script>
+
+    <style>
+        .container {
+            max-width: 400px;
+            margin: 50px auto;
+            padding: 20px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+            border-radius: 5px;
+        }
+        
+        .form-group {
+            margin-bottom: 20px;
+        }
+        
+        label {
+            display: block;
+            margin-bottom: 5px;
+        }
+        
+        input {
+            width: 100%;
+            padding: 8px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+        
+        #message {
+            margin-top: 20px;
+            text-align: center;
+        }
+        
+        h2 {
+            text-align: center;
+            color: #333;
+        }
+    </style>
+</body>
+</html>
+<link rel="stylesheet" href="styles.css">
+<script>
+    document.getElementById('forgotPasswordForm').addEventListener('submit', function(e) {
+        e.preventDefault();
+        
+        const email = this.email.value;
+        const messageDiv = document.getElementById('message');
+        messageDiv.innerHTML = 'Sending...'; // Show loading state
+        
+        fetch('forgot-password.php', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded',
+            },
+            body: 'email=' + encodeURIComponent(email)
+        })
+        .then(response => {
+            // First check if the response is ok
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
+            }
+            return response.json();
+        })
+        .then(data => {
+            if (data.success) {
+                messageDiv.style.color = 'green';
+                messageDiv.innerHTML = 'Reset code has been sent to your email!';
+                // For testing purposes, show the code (remove in production)
+                if (data.message) {
+                    messageDiv.innerHTML += '<br>' + data.message;
+                }
+                setTimeout(() => {
+                    window.location.href = 'verify-code.html';
+                }, 2000);
+            } else {
+                messageDiv.style.color = 'red';
+                messageDiv.innerHTML = data.message || 'Failed to send reset code. Please try again.';
+            }
+        })
+        .catch(error => {
+            console.error('Error:', error);
+            messageDiv.style.color = 'red';
+            messageDiv.innerHTML = 'An error occurred. Please check if your server is running and try again.';
+        });
+    });
+    </script>

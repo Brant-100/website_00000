@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Enter Verification Code</title>
+    <style>
+        .container {
+            max-width: 400px;
+            margin: 50px auto;
+            padding: 20px;
+            text-align: center;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+            border-radius: 5px;
+        }
+
+        .code-inputs {
+            display: flex;
+            gap: 10px;
+            justify-content: center;
+            margin: 20px 0;
+        }
+
+        .code-input {
+            width: 40px;
+            height: 40px;
+            text-align: center;
+            font-size: 20px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+
+        .verify-btn {
+            padding: 10px 20px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        .verify-btn:hover {
+            background-color: #45a049;
+        }
+
+        #message {
+            margin-top: 20px;
+            color: #666;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>Enter Verification Code</h2>
+        <p>Please enter the 6-digit code sent to your email</p>
+        
+        <form id="verificationForm" onsubmit="handleVerification(event)">
+            <div class="code-inputs">
+                <input type="text" class="code-input" maxlength="1" pattern="[0-9]" required>
+                <input type="text" class="code-input" maxlength="1" pattern="[0-9]" required>
+                <input type="text" class="code-input" maxlength="1" pattern="[0-9]" required>
+                <input type="text" class="code-input" maxlength="1" pattern="[0-9]" required>
+                <input type="text" class="code-input" maxlength="1" pattern="[0-9]" required>
+                <input type="text" class="code-input" maxlength="1" pattern="[0-9]" required>
+            </div>
+            <button type="submit" class="verify-btn">Verify Code</button>
+        </form>
+        <div id="message"></div>
+    </div>
+
+    <script>
+        // Auto-focus next input
+        const inputs = document.querySelectorAll('.code-input');
+        inputs.forEach((input, index) => {
+            input.addEventListener('input', function() {
+                if (this.value.length === 1) {
+                    if (index < inputs.length - 1) {
+                        inputs[index + 1].focus();
+                    }
+                }
+            });
+
+            // Handle backspace
+            input.addEventListener('keydown', function(e) {
+                if (e.key === 'Backspace' && !this.value && index > 0) {
+                    inputs[index - 1].focus();
+                }
+            });
+        });
+
+        function handleVerification(event) {
+            event.preventDefault();
+            
+            const code = Array.from(inputs).map(input => input.value).join('');
+            const messageDiv = document.getElementById('message');
+            
+            // Here you would typically verify the code with your backend
+            // For demonstration, we'll just show the entered code
+            messageDiv.innerHTML = `Verifying code: ${code}`;
+            messageDiv.style.color = '#4CAF50';
+        }
+    </script>
+</body>
+</html>
+<link rel="stylesheet" href="styles.css">

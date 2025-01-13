@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Embedded Chatbot</title>
+    <link rel="stylesheet" href="chatbot_frame.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+<body>
+    <!-- Chatbot Frame -->
+    <div class="draggable-frame" id="chatbot-frame" style="display: flex;">
+        <!-- Drag Area -->
+        <div class="drag-area" id="drag-area">
+            <button class="full-screen-button" onclick="toggleFullScreen()">
+                <i class="fas fa-expand"></i>
+            </button>
+            <button class="close-button" onclick="closeFrame()">&#10006;</button>
+        </div>
+
+        <!-- Chat Content -->
+        <div class="content" id="chat-content">
+            <p>Welcome! Type your question below.</p>
+        </div>
+
+        <!-- Input Area -->
+        <div class="input-area">
+            <input type="text" id="user-input" placeholder="Type your message here...">
+            <button onclick="sendMessage()">Send</button>
+        </div>
+    </div>
+
+    <!-- Reopen Button -->
+    <button class="reopen-button" id="reopen-button" style="display: none;" onclick="reopenFrame()">
+        <i class="fas fa-comment-alt"></i>
+    </button>
+
+    <script src="chatbot_frame.js"></script>
+</body>
+</html>

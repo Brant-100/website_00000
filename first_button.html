@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</body>
+</html>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Forgot Password</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div class="container">
+    <button class="forgot-password-button" onclick="forgotPassword()">Forgot Password?</button>
+  </div>
+
+  <script>
+    function forgotPassword() {
+      alert("Redirecting to forgot password page...");
+      // Replace the URL with the actual forgot password page
+      window.location.href = "/forgot-password";
+    }
+  </script>
+</body>
+</html>
+<style>
+    .container {
+        max-width: 400px;
+        margin: 50px auto;
+        padding: 20px;
+        text-align: center;
+        box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        border-radius: 5px;
+    }
+
+    .forgot-password-button {
+        padding: 10px 20px;
+        background-color: #4CAF50;
+        color: white;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+        font-size: 16px;
+    }
+
+    .forgot-password-button:hover {
+        background-color: #45a049;
+    }
+</style>
+<link rel="stylesheet" href="styles.css">
