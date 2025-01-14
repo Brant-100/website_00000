@@ -25,24 +25,38 @@
             
             const email = document.getElementById('email').value;
             const messageDiv = document.getElementById('message');
+            messageDiv.innerHTML = 'Sending...';
             
-            // This is where you would typically make an API call to your backend
-            // For demonstration, we'll show a success message
-            messageDiv.innerHTML = `Password reset link has been sent to ${email}. Please check your inbox.`;
-            messageDiv.style.color = '#4CAF50';
-            
-            // Clear the form
-            document.getElementById('resetForm').reset();
+            // Use mock backend instead of real fetch
+            if (mockBackend.sendVerificationCode(email)) {
+                messageDiv.style.color = '#ffc300';
+                messageDiv.innerHTML = 'Verification code sent to your email!';
+                // Store email in sessionStorage
+                sessionStorage.setItem('resetEmail', email);
+                // Redirect to code verification screen
+                setTimeout(() => {
+                    window.location.href = 'code_screen.html';
+                }, 2000);
+            } else {
+                messageDiv.style.color = '#ffc300';
+                messageDiv.innerHTML = 'Failed to send code. Please try again.';
+            }
         }
     </script>
 
     <style>
+        body {
+            background-color: #ffd7ad;
+            color: #635f5c;
+        }
+        
         .container {
             max-width: 400px;
             margin: 50px auto;
             padding: 20px;
             box-shadow: 0 0 10px rgba(0,0,0,0.1);
             border-radius: 5px;
+            background-color: #635f5c;
         }
         
         .form-group {
@@ -52,24 +66,42 @@
         label {
             display: block;
             margin-bottom: 5px;
+            color: #e4ddd6;
         }
         
         input {
             width: 100%;
             padding: 8px;
-            border: 1px solid #ddd;
+            border: 2px solid #ffc300;
             border-radius: 4px;
             box-sizing: border-box;
+            color: #635f5c;
+            background-color: #ffffff;
+        }
+        
+        .forgot-password-btn {
+            padding: 10px 20px;
+            background-color: #ff7c00;
+            color: #ffffff;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            width: 100%;
+        }
+
+        .forgot-password-btn:hover {
+            background-color: #ffc300;
         }
         
         #message {
             margin-top: 20px;
             text-align: center;
+            color: #e4ddd6;
         }
         
         h2 {
             text-align: center;
-            color: #333;
+            color: #e4ddd6;
         }
     </style>
 </body>

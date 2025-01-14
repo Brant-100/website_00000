@@ -5,6 +5,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Enter Verification Code</title>
     <style>
+        body {
+            background-color: #ffd7ad;
+            color: #635f5c;
+        }
+
         .container {
             max-width: 400px;
             margin: 50px auto;
@@ -12,6 +17,7 @@
             text-align: center;
             box-shadow: 0 0 10px rgba(0,0,0,0.1);
             border-radius: 5px;
+            background-color: #635f5c;
         }
 
         .code-inputs {
@@ -26,26 +32,36 @@
             height: 40px;
             text-align: center;
             font-size: 20px;
-            border: 1px solid #ddd;
+            border: 2px solid #ffc300;
             border-radius: 4px;
+            color: #635f5c;
+            background-color: #ffffff;
         }
 
         .verify-btn {
             padding: 10px 20px;
-            background-color: #4CAF50;
-            color: white;
+            background-color: #ff7c00;
+            color: #ffffff;
             border: none;
             border-radius: 4px;
             cursor: pointer;
         }
 
         .verify-btn:hover {
-            background-color: #45a049;
+            background-color: #ffc300;
         }
 
         #message {
             margin-top: 20px;
-            color: #666;
+            color: #e4ddd6;
+        }
+
+        h2 {
+            color: #e4ddd6;
+        }
+
+        p {
+            color: #e4ddd6;
         }
     </style>
 </head>
@@ -88,16 +104,21 @@
             });
         });
 
-        function handleVerification(event) {
+        async function handleVerification(event) {
             event.preventDefault();
             
             const code = Array.from(inputs).map(input => input.value).join('');
             const messageDiv = document.getElementById('message');
             
-            // Here you would typically verify the code with your backend
-            // For demonstration, we'll just show the entered code
-            messageDiv.innerHTML = `Verifying code: ${code}`;
-            messageDiv.style.color = '#4CAF50';
+            if (mockBackend.verifyCode(code)) {
+                messageDiv.style.color = '#ffc300';
+                messageDiv.innerHTML = 'Verification successful!';
+                // Redirect to new password screen
+                window.location.href = 'enter_new_password_screen.html';
+            } else {
+                messageDiv.style.color = '#ffc300';
+                messageDiv.innerHTML = 'Invalid verification code. Please try again.';
+            }
         }
     </script>
 </body>
